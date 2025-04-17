@@ -157,7 +157,6 @@ public class EventClient {
         }
         else {
             System.err.println("Invalid command");
-            return;
         }
 
 

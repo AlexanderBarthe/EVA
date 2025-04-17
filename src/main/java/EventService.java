@@ -63,7 +63,8 @@ public class EventService {
     }
 
     public void deleteAllEvents() {
-        eventsById.keySet().forEach(this::deleteEvent);
+        eventsById.clear();
+        idService.dropAllIds();
     }
 
     private void saveEvent(Event event) {

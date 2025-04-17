@@ -39,6 +39,10 @@ public class IDService {
         return activeIds.contains(id);
     }
 
+    public void dropAllIds() {
+        activeIds.clear();
+    }
+
 
 
 }
