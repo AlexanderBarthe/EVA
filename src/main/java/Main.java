@@ -1,3 +1,5 @@
+import utility.PrimeNumberGenerator;
+
 import java.time.LocalDateTime;
 
 //Class definition
@@ -41,6 +43,14 @@ public class Main {
 
         System.out.println(fetchedEvent1);
         System.out.println(fetchedEvent2);
+
+
+
+        PrimeNumberGenerator primeGenerator = new PrimeNumberGenerator(1000000000L, 9999999999L);
+
+        for(int i = 0; i < 10; i++) {
+            System.out.println(primeGenerator.generatePrimeNumber());
+        }
 
 
     }
