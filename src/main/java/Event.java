@@ -16,6 +16,14 @@ public class Event {
         this.ticketsAvailable = ticketsAvailable;
     }
 
+    public Event(Event event) {
+        this.id = event.id;
+        this.name = event.name;
+        this.location = event.location;
+        this.time = event.time;
+        this.ticketsAvailable = event.ticketsAvailable;
+    }
+
     public long getId() {
         return id;
     }

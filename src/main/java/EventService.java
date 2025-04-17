@@ -19,7 +19,7 @@ public class EventService {
     }
 
     public Event getEventById(long id) {
-        return eventsById.get(id);
+        return new Event(eventsById.get(id));
     }
 
     public void updateEvent(Event event) {
