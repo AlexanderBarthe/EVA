@@ -65,6 +65,6 @@ public class Event {
     }
 
     public String toString() {
-        return "Event [name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
+        return "Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
     }
 }

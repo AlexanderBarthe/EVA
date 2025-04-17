@@ -1,7 +1,9 @@
 import com.sun.jdi.InternalException;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 public class EventService {
 
@@ -13,7 +15,7 @@ public class EventService {
         idService = new IDService();
     }
 
-    public Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) {
+    public Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) throws IllegalArgumentException{
 
         long generatedId = idService.generateNewId();
 
@@ -35,7 +37,7 @@ public class EventService {
         return new Event(eventsById.get(id));
     }
 
-    public void updateEvent(Event event) {
+    public void updateEvent(Event event) throws IllegalArgumentException {
 
         if(!eventsById.containsKey(event.getId())) {
             throw new IllegalArgumentException("Event with id " + event.getId() + " does not exist.");
@@ -45,7 +47,7 @@ public class EventService {
 
     }
 
-    public void deleteEvent(long id) {
+    public void deleteEvent(long id) throws IllegalArgumentException {
 
         if(!eventsById.containsKey(id)) {
             throw new IllegalArgumentException("Event with id " + id + " does not exist.");
@@ -56,8 +58,12 @@ public class EventService {
     }
 
 
-    public HashMap<Long, Event> getAllEvents() {
-        return eventsById;
+    public Collection<Event> getAllEvents() {
+        return eventsById.values();
+    }
+
+    public void deleteAllEvents() {
+        eventsById.keySet().forEach(this::deleteEvent);
     }
 
     private void saveEvent(Event event) {
@@ -73,6 +79,8 @@ public class EventService {
         eventsById.put(event.getId(), event);
 
     }
+
+
 
 
 }
