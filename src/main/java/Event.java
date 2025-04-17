@@ -2,18 +2,27 @@ import java.time.LocalDateTime;
 
 public class Event {
 
+    private long id;
     private String name;
     private String location;
     private LocalDateTime time;
     private int ticketsAvailable;
 
-    public Event(String name, String location, LocalDateTime time, int ticketsAvailable) {
+    public Event(long id, String name, String location, LocalDateTime time, int ticketsAvailable) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.time = time;
         this.ticketsAvailable = ticketsAvailable;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getLocation() {
         return location;
