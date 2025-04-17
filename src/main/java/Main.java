@@ -8,49 +8,32 @@ public class Main {
     //Main function, start of program
     public static void main(String[] args) {
 
-        Event konzert = new Event(1,
-                "Electic Callboy",
+        EventService eventService = new EventService();
+        Event event1 = eventService.createEvent("Electic Callboy",
                 "Leipzig",
                 LocalDateTime.now().plusHours(6),
                 10000);
-
-        Event pairProgramming = new Event(2,
-                "Pair Programm Verteilte Anwendungen",
+        Event event2 = eventService.createEvent("Pair Programm Verteilte Anwendungen",
                 "Universität Leipzig I125",
                 LocalDateTime.now().plusMinutes(5),
                 13);
-
-        Event fsrSpieleabend = new Event(3,
-
-                "Spieleabend Fsr Informatik",
+        Event event3 = eventService.createEvent("Spieleabend Fsr Informatik",
                 "Uni Leipzig, Felix Klein Hörsaal",
                 LocalDateTime.of(2025, 4, 24, 19, 00),
                 200);
 
-        EventService eventService = new EventService();
-        eventService.createEvent(konzert);
-        eventService.createEvent(pairProgramming);
-        eventService.createEvent(fsrSpieleabend);
-
-        Event fetchedEvent2 = eventService.getEventById(2L);
+        Event fetchedEvent2 = eventService.getEventById(event2.getId());
         fetchedEvent2.setTime(LocalDateTime.now().plusHours(2));
         fetchedEvent2.setTicketsAvailable(10);
         eventService.updateEvent(fetchedEvent2);
 
-        eventService.deleteEvent(3L);
+        eventService.deleteEvent(event3.getId());
 
-        Event fetchedEvent1 = eventService.getEventById(1L);
+        Event fetchedEvent1 = eventService.getEventById(event1.getId());
 
         System.out.println(fetchedEvent1);
         System.out.println(fetchedEvent2);
 
-
-
-        PrimeNumberGenerator primeGenerator = new PrimeNumberGenerator(1000000000L, 9999999999L);
-
-        for(int i = 0; i < 100; i++) {
-            System.out.println(primeGenerator.generatePrimeNumber());
-        }
 
 
     }

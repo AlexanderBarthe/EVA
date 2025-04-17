@@ -26,8 +26,10 @@ public class PrimeNumberGenerator {
         Random rand = new Random();
         int remainingAttempts = MAX_GEN_ATTEMPTS;
 
+        long range = maxNumber - minNumber + 1;
+
         while (remainingAttempts-- > 0) {
-            long candidate = rand.nextLong(maxNumber - minNumber + 1) + minNumber;
+            long candidate = Math.floorMod(rand.nextLong(), range) + minNumber;
             if (isPrime(candidate)) {
                 return candidate;
             }
