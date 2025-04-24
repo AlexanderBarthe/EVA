@@ -70,6 +70,8 @@ public class Event {
         this.name = name;
     }
 
+    public void addTicket(Ticket ticket) {soldtickets.add(ticket);}
+
     public String toString() {
         return "models.Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
     }

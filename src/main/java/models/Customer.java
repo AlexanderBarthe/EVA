@@ -51,6 +51,10 @@ public class Customer {
     public void setDateofbirth(LocalDate birth){
         this.dateofbirth = birth;
     }
+    public void addTicket(Ticket ticket){tickets.add(ticket);}
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
 
     @Override
     public String toString(){
