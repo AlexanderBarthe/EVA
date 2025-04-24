@@ -6,6 +6,7 @@ import models.Event;
 import models.Ticket;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class TicketService {
@@ -48,11 +49,44 @@ public class TicketService {
 
 
         Ticket ticket = new Ticket(generatedId, transactiondate, customer, event);
+        ticketsById.put(generatedId, ticket);
         event.setTicketsAvailable(event.getTicketsAvailable() - 1);
         event.addTicket(ticket);
         customer.addTicket(ticket);
 
 
         return ticket;
+    }
+
+    public Ticket getTicketById(long id) {
+        return ticketsById.get(id);
+    }
+
+    public Collection<Ticket> getAllTickets() {
+        return ticketsById.values();
+    }
+
+
+    public void deleteTicket(long id){
+
+        if(!ticketsById.containsKey(id)) {
+            throw new IllegalArgumentException("Ticket with id " + id + " does not exist.");
+        }
+
+        idService.removeId(id);
+        ticketsById.remove(id);
+    }
+
+    public void deleteAllTickets() {
+        ticketsById.clear();
+        idService.dropAllIds();
+    }
+
+    public boolean verifyTicket(long ticketId, long customerId, long eventId){
+        Ticket ticket = ticketsById.get(ticketId);
+        long actualCustomerId = ticket.getCustomer().getId();
+        long actualEventId = ticket.getEvent().getId();
+
+        return actualCustomerId == customerId && actualEventId == eventId;
     }
 }
