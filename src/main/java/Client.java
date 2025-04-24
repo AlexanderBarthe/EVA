@@ -3,14 +3,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class EventClient {
+public class Client {
 
     private EventService eventService;
+    private CustomerService customerService;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy,HH:mm");
 
-    public EventClient() {
+    public Client() {
         eventService = new EventService();
+        customerService = new CustomerService();
     }
 
     public void run() {
