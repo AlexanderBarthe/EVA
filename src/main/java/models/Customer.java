@@ -1,6 +1,8 @@
 package models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
 
@@ -8,12 +10,14 @@ public class Customer {
     private String username;
     private String email;
     private LocalDate dateofbirth;
+    private List<Ticket> tickets;
 
     public Customer(long id, String username, String email, LocalDate birth) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.dateofbirth = birth;
+        this.tickets = new ArrayList<>();
     }
 
     public Customer(Customer customer) {
