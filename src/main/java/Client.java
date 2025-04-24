@@ -1,3 +1,7 @@
+import models.Event;
+import services.CustomerService;
+import services.EventService;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -37,7 +41,7 @@ public class Client {
         if(args[0].equals("create")) {
 
             if(args.length < 5) {
-                System.out.println("Please specify: Event Name, Location, Time and Tickets");
+                System.out.println("Please specify: models.Event Name, Location, Time and Tickets");
                 return;
             }
 
@@ -75,7 +79,7 @@ public class Client {
         else if(args[0].equals("update")) {
 
             if(args.length < 4) {
-                System.out.println("Please specify: Event Id, key (name/location/time/tickets, value");
+                System.out.println("Please specify: models.Event Id, key (name/location/time/tickets, value");
             }
 
             Event event = null;
@@ -124,7 +128,7 @@ public class Client {
                 System.err.println(iae.getMessage());
             }
 
-            System.out.println("Event updated.");
+            System.out.println("models.Event updated.");
 
         }
         else if(args[0].equals("delete")) {
@@ -133,7 +137,7 @@ public class Client {
                 try {
                     long id = Long.parseLong(args[1]);
                     eventService.deleteEvent(id);
-                    System.out.println("Event deleted.");
+                    System.out.println("models.Event deleted.");
                 }
                 catch(NumberFormatException nfe) {
                     System.err.println("Please give a valid id.");

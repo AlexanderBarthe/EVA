@@ -1,4 +1,7 @@
+package services;
+
 import com.sun.jdi.InternalException;
+import models.Customer;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -32,7 +35,7 @@ public class CustomerService {
         Customer customer = new Customer(generatedId, username, email, dateofbirth);
 
         if(customersById.containsKey(customer.getId())) {
-            throw new IllegalArgumentException("Customer with id " + customer.getId() + " already exists");
+            throw new IllegalArgumentException("models.Customer with id " + customer.getId() + " already exists");
         }
 
         saveCustomer(customer);
@@ -45,7 +48,7 @@ public class CustomerService {
     public void updateCustomer (Customer customer) throws IllegalArgumentException{
 
         if(!customersById.containsKey(customer.getId())) {
-            throw new IllegalArgumentException("Event with id " + customer.getId() + " does not exist.");
+            throw new IllegalArgumentException("models.Event with id " + customer.getId() + " does not exist.");
         }
 
         saveCustomer(customer);
@@ -54,7 +57,7 @@ public class CustomerService {
     public void deleteCustomer(long id) throws IllegalArgumentException {
 
         if(!customersById.containsKey(id)) {
-            throw new IllegalArgumentException("Customer with id " + id + " does not exist.");
+            throw new IllegalArgumentException("models.Customer with id " + id + " does not exist.");
         }
 
         idService.removeId(id);

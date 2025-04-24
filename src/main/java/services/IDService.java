@@ -1,3 +1,5 @@
+package services;
+
 import utility.PrimeNumberGenerator;
 
 import java.util.HashSet;

@@ -1,3 +1,5 @@
+package models;
+
 import java.time.LocalDateTime;
 
 public class Event {
@@ -65,6 +67,6 @@ public class Event {
     }
 
     public String toString() {
-        return "Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
+        return "models.Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
     }
 }
