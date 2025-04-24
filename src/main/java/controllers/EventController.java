@@ -1,3 +1,5 @@
+package controllers;
+
 import models.Event;
 import services.CustomerService;
 import services.EventService;
@@ -7,14 +9,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class Client {
+public class EventController {
 
     private EventService eventService;
     private CustomerService customerService;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy,HH:mm");
 
-    public Client() {
+    public EventController() {
         eventService = new EventService();
         customerService = new CustomerService();
     }

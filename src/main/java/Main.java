@@ -1,10 +1,12 @@
+import controllers.EventController;
+
 //Class definition
 public class Main {
 
     //Main function, start of program
     public static void main(String[] args) {
 
-        Client client = new Client();
+        EventController client = new EventController();
         client.run();
 
     }
