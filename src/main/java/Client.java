@@ -34,10 +34,11 @@ public class Client {
             return;
         }
 
-        if(args[0].equals("createEvent")) {
+        if(args[0].equals("create")) {
 
             if(args.length < 5) {
                 System.out.println("Please specify: Event Name, Location, Time and Tickets");
+                return;
             }
 
             try {
@@ -52,7 +53,7 @@ public class Client {
             }
 
         }
-        else if(args[0].equals("getEvent")) {
+        else if(args[0].equals("get")) {
 
             if(args.length >= 2) {
                 try {
@@ -71,7 +72,7 @@ public class Client {
             }
 
         }
-        else if(args[0].equals("updateEvent")) {
+        else if(args[0].equals("update")) {
 
             if(args.length < 4) {
                 System.out.println("Please specify: Event Id, key (name/location/time/tickets, value");
@@ -126,7 +127,7 @@ public class Client {
             System.out.println("Event updated.");
 
         }
-        else if(args[0].equals("deleteEvent")) {
+        else if(args[0].equals("delete")) {
 
             if(args.length >= 2) {
                 try {
@@ -146,7 +147,7 @@ public class Client {
 
         }
 
-        else if(args[0].equals("listAllEvents")) {
+        else if(args[0].equals("listAll")) {
 
             eventService.getAllEvents().forEach(System.out::println);
 
