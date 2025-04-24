@@ -1,5 +1,6 @@
 import controllers.CustomerController;
 import controllers.EventController;
+import controllers.TicketController;
 
 import java.util.Scanner;
 
@@ -7,12 +8,13 @@ public class Client {
 
     private CustomerController customerController;
     private EventController eventController;
-
+    private TicketController ticketController;
 
 
     public Client() {
         customerController = new CustomerController();
         eventController = new EventController();
+        ticketController = new TicketController();
     }
 
     public void run() {
@@ -29,6 +31,7 @@ public class Client {
             switch (firstKeyword) {
                 case "event": eventController.executeString(command); break;
                 case "customer": customerController.executeString(command); break;
+                case "ticket": ticketController.executeString(command); break;
                 default: System.out.println("Invalid command"); break;
             }
 
