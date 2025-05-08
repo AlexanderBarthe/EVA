@@ -1,16 +1,12 @@
 package controllers;
 
 import com.sun.jdi.InternalException;
-import jdk.jshell.spi.ExecutionControl;
 import models.Customer;
 import models.Event;
 import models.Ticket;
 import services.CustomerService;
 import services.EventService;
 import services.TicketService;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 public class TicketController {
     
@@ -81,60 +77,19 @@ public class TicketController {
             }
 
         }
-        else if(args[0].equals("update")) {
-
+        else if(args[0].equals("verify")) {
             if(args.length < 4) {
-                System.out.println("Please specify: Ticket Id, key (name/location/time/tickets, value");
+                System.out.println("Please specify: Customer Id, Event Id");
+                return;
             }
-
-            Ticket ticket = null;
-
             try {
-                ticket = ticketService.getTicketById(Long.parseLong(args[1]));
-            } catch (NumberFormatException nfe) {
+                long ticketId = Long.parseLong(args[1]);
+                long customerId = Long.parseLong(args[2]);
+                long eventId = Long.parseLong(args[3]);
+                boolean valid = ticketService.verifyTicket(ticketId, customerId, eventId);
+            } catch (NumberFormatException e) {
                 System.err.println("Please give a valid id.");
-                return;
-            } catch (IllegalArgumentException iae) {
-                System.err.println(iae.getMessage());
-                return;
             }
-
-            if(ticket == null) {
-                System.err.println("An unknown error occurred.");
-                return;
-            }
-            try {
-                switch (args[2]) {
-                    case "name":
-                        ticket.setName(args[3]);
-                        ticketService.updateTicket(ticket);
-                        break;
-                    case "location":
-                        ticket.setLocation(args[3]);
-                        ticketService.updateTicket(ticket);
-                        break;
-                    case "time":
-                        ticket.setTime(LocalDateTime.parse(args[3], formatter));
-                        ticketService.updateTicket(ticket);
-                        break;
-                    case "tickets":
-                        ticket.setTicketsAvailable(Integer.parseInt(args[3]));
-                        ticketService.updateTicket(ticket);
-                        break;
-                    default:
-                        System.err.println("Invalid key. Please give name, location, time or tickets");
-                        return;
-                }
-            } catch (DateTimeParseException dpe) {
-                System.err.println("The date is wrongly formatted. The right format is dd.MM.yyyy,HH:mm");
-            } catch (NumberFormatException nfe) {
-                System.err.println("The number you gave is invalid");
-            } catch (IllegalArgumentException iae) {
-                System.err.println(iae.getMessage());
-            }
-
-            System.out.println("Ticket updated.");
-
         }
         else if(args[0].equals("delete")) {
 
