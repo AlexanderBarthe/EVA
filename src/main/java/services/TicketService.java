@@ -86,6 +86,17 @@ public class TicketService {
         long actualCustomerId = ticket.getCustomer().getId();
         long actualEventId = ticket.getEvent().getId();
 
+        if(!ticketsById.containsKey(ticketId)){
+            throw new IllegalArgumentException("ticket does not exist");
+        }
+        if (idService.containsId(customerId)){
+            throw new IllegalArgumentException("customer does not exist");
+        }
+        if(idService.containsId(eventId)){
+            throw new IllegalArgumentException("event does not exist");
+        }
+
+
         return actualCustomerId == customerId && actualEventId == eventId;
     }
 }
