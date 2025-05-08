@@ -16,7 +16,7 @@ public class TicketShop {
     public TicketShop() {
         this.customerService = new CustomerService();
         this.eventService = new EventService();
-        this.ticketService = new TicketService(eventService);
+        this.ticketService = new TicketService(eventService, customerService);
     }
 
     public CustomerServiceInterface getCustomerService() {
