@@ -36,7 +36,8 @@ public class Client {
                 case "event": eventController.executeString(command); break;
                 case "customer": customerController.executeString(command); break;
                 case "ticket": ticketController.executeString(command); break;
-                default: System.out.println("Invalid command"); break;
+                case "exit": System.exit(0); break;
+                default: System.out.println("Invalid command. Use event, customer, ticket or exit"); break;
             }
 
 

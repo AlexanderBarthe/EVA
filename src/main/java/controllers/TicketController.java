@@ -27,7 +27,7 @@ public class TicketController {
         String[] args = input.split(" ");
 
         if(args.length == 0) {
-            System.out.println("Invalid command");
+            System.out.println("Invalid command. Use \"ticket create/get/verify/delete/listAll/deleteAll\" to execute a command.");
             return;
         }
 

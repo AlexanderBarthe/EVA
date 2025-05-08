@@ -27,7 +27,7 @@ public class CustomerController {
         String[] args = input.split(" ");
 
         if(args.length == 0) {
-            System.out.println("Invalid command");
+            System.out.println("Invalid command. Use \"customer create/get/update/delete/listAll/deleteAll\" to execute a command.");
             return;
         }
 
