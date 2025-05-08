@@ -11,15 +11,14 @@ import java.util.HashMap;
 public class EventService implements EventServiceInterface {
 
     private static HashMap<Long, Event> eventsById = new HashMap<>();
-    private IDService idService;
+    private final IDService idService;
 
     public EventService() {
-        this.eventsById = new HashMap<>();
         idService = new IDService();
     }
 
     @Override
-    public Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) throws IllegalArgumentException{
+    public Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) throws IllegalArgumentException, InternalException{
 
         long generatedId = idService.generateNewId();
 
@@ -74,7 +73,7 @@ public class EventService implements EventServiceInterface {
         idService.dropAllIds();
     }
 
-    private void saveEvent(Event event) {
+    private void saveEvent(Event event) throws IllegalArgumentException {
 
         if(event.getTime().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("This date is already in the past.");

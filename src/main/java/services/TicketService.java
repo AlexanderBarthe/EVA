@@ -13,17 +13,13 @@ import java.util.HashMap;
 public class TicketService implements TicketServiceInterface {
 
     private static HashMap<Long, Ticket> ticketsById = new HashMap<>();
-    private IDService idService;
-    private EventService eventService;
-    private CustomerService customerService;
+    private final IDService idService;
 
     public TicketService() {
         this.idService = new IDService();
-        this.eventService = new EventService();
-        this.customerService = new CustomerService();
     }
 
-    public Ticket createTicket(Customer customer, Event event) {
+    public Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException, InternalException {
         long generatedId = idService.generateNewId();
 
         if(generatedId == -1) {
@@ -70,7 +66,7 @@ public class TicketService implements TicketServiceInterface {
     }
 
 
-    public void deleteTicket(long id){
+    public void deleteTicket(long id) throws IllegalArgumentException{
 
         if(!ticketsById.containsKey(id)) {
             throw new IllegalArgumentException("Ticket with id " + id + " does not exist.");
@@ -85,7 +81,7 @@ public class TicketService implements TicketServiceInterface {
         idService.dropAllIds();
     }
 
-    public boolean verifyTicket(long ticketId, long customerId, long eventId){
+    public boolean verifyTicket(long ticketId, long customerId, long eventId) throws IllegalArgumentException{
         Ticket ticket = ticketsById.get(ticketId);
         long actualCustomerId = ticket.getCustomer().getId();
         long actualEventId = ticket.getEvent().getId();

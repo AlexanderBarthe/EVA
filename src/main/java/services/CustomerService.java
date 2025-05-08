@@ -11,13 +11,13 @@ import java.util.HashMap;
 public class CustomerService implements CustomerServiceInterface {
 
     private static HashMap<Long, Customer> customersById = new HashMap<>();
-    private IDService idService;
+    private final IDService idService;
 
     public  CustomerService() {
         idService = new IDService();
     }
 
-    public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException{
+    public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException, InternalException{
         long generatedId = idService.generateNewId();
 
         if(generatedId == -1) {
