@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class EventService {
 
-    private HashMap<Long, Event> eventsById;
+    private static HashMap<Long, Event> eventsById;
     private IDService idService;
 
     public EventService() {

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class TicketService {
 
-    private HashMap<Long, Ticket> ticketsById;
+    private static HashMap<Long, Ticket> ticketsById;
     private IDService idService;
     private EventService eventService;
     private CustomerService customerService;

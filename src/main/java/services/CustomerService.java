@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class CustomerService {
 
-    private HashMap<Long, Customer> customersById;
+    private static HashMap<Long, Customer> customersById;
     private IDService idService;
 
     public  CustomerService() {
