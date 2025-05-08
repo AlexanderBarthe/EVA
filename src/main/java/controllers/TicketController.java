@@ -49,7 +49,8 @@ public class TicketController {
                     return;
                 }
 
-                ticketService.createTicket(customer, event);
+                Ticket newTicket = ticketService.createTicket(customer, event);
+                System.out.println(newTicket);
 
             } catch (NumberFormatException e) {
                 System.err.println("Invalid number");

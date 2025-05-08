@@ -24,6 +24,10 @@ public class Client {
         while (true) {
             String input = scanner.nextLine();
 
+            if(!input.contains(" ")) {
+                System.out.println("Invalid command or not enough arguments.");
+                continue;
+            }
             String firstKeyword = input.substring(0, input.indexOf(" "));
             String command = input.substring(input.indexOf(" ") + 1);
 

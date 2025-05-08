@@ -36,7 +36,8 @@ public class CustomerController {
             }
 
             try {
-                customerService.createCustomer(args[1], args[2], LocalDate.parse(args[3], dateFormatter));
+                Customer newCustomer = customerService.createCustomer(args[1], args[2], LocalDate.parse(args[3], dateFormatter));
+                System.out.println(newCustomer);
             } catch (DateTimeParseException e) {
                 System.err.println("The date is wrongly formatted. The right format is dd.MM.yyyy");
             } catch (IllegalArgumentException | InternalException e) {
