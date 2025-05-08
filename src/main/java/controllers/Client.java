@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Client {
@@ -24,18 +25,14 @@ public class Client {
         while (true) {
             String input = scanner.nextLine();
 
-            if(!input.contains(" ")) {
-                System.out.println("Invalid command or not enough arguments.");
-                continue;
-            }
-            String firstKeyword = input.substring(0, input.indexOf(" "));
-            String command = input.substring(input.indexOf(" ") + 1);
+            String[] args = input.split(" ");
 
+            String[] subCommand = Arrays.copyOfRange(args, 1, args.length);
 
-            switch (firstKeyword) {
-                case "event": eventController.executeString(command); break;
-                case "customer": customerController.executeString(command); break;
-                case "ticket": ticketController.executeString(command); break;
+            switch (args[0]) {
+                case "event": eventController.executeString(subCommand); break;
+                case "customer": customerController.executeString(subCommand); break;
+                case "ticket": ticketController.executeString(subCommand); break;
                 case "exit": System.exit(0); break;
                 default: System.out.println("Invalid command. Use event, customer, ticket or exit"); break;
             }

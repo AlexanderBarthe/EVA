@@ -22,11 +22,9 @@ public class TicketController {
         this.eventService = ticketShop.getEventService();
     }
 
-    public void executeString(String input) {
+    public void executeString(String[] args) {
 
-        String[] args = input.split(" ");
-
-        if(args.length == 0) {
+        if(args.length == 0 || args[1].isEmpty()) {
             System.out.println("Invalid command. Use \"ticket create/get/verify/delete/listAll/deleteAll\" to execute a command.");
             return;
         }
