@@ -1,13 +1,14 @@
 package services;
 
 import com.sun.jdi.InternalException;
+import interfaces.CustomerServiceInterface;
 import models.Customer;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class CustomerService {
+public class CustomerService implements CustomerServiceInterface {
 
     private static HashMap<Long, Customer> customersById = new HashMap<>();
     private IDService idService;

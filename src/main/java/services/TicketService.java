@@ -1,6 +1,7 @@
 package services;
 
 import com.sun.jdi.InternalException;
+import interfaces.TicketServiceInterface;
 import models.Customer;
 import models.Event;
 import models.Ticket;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class TicketService {
+public class TicketService implements TicketServiceInterface {
 
     private static HashMap<Long, Ticket> ticketsById = new HashMap<>();
     private IDService idService;

@@ -1,13 +1,14 @@
 package services;
 
 import com.sun.jdi.InternalException;
+import interfaces.EventServiceInterface;
 import models.Event;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class EventService {
+public class EventService implements EventServiceInterface {
 
     private static HashMap<Long, Event> eventsById = new HashMap<>();
     private IDService idService;
@@ -17,6 +18,7 @@ public class EventService {
         idService = new IDService();
     }
 
+    @Override
     public Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) throws IllegalArgumentException{
 
         long generatedId = idService.generateNewId();
