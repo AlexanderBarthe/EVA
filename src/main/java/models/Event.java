@@ -11,7 +11,7 @@ public class Event {
     private String location;
     private LocalDateTime time;
     private int ticketsAvailable;
-    private List<Ticket> soldtickets;
+    private List<Ticket> soldtickets = new ArrayList<>();
 
     public Event(long id, String name, String location, LocalDateTime time, int ticketsAvailable) {
         this.id = id;
@@ -19,7 +19,6 @@ public class Event {
         this.location = location;
         this.time = time;
         this.ticketsAvailable = ticketsAvailable;
-        this.soldtickets = new ArrayList<>();
     }
 
     public Event(Event event) {

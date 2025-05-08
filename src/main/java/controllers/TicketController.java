@@ -88,6 +88,12 @@ public class TicketController {
                 long customerId = Long.parseLong(args[2]);
                 long eventId = Long.parseLong(args[3]);
                 boolean valid = ticketService.verifyTicket(ticketId, customerId, eventId);
+                if(valid) {
+                    System.out.println("Ticket is valid");
+                }
+                else {
+                    System.out.println("Ticket is invalid");
+                }
             } catch (NumberFormatException e) {
                 System.err.println("Please give a valid id.");
             }
