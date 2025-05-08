@@ -72,6 +72,6 @@ public class Event {
     public void addTicket(Ticket ticket) {soldtickets.add(ticket);}
 
     public String toString() {
-        return "models.Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
+        return "Event [id=" + id + ",name=" + name + ", location=" + location + ", time=" + time + ", ticketsAvailable=" + ticketsAvailable + "]";
     }
 }

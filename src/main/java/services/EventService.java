@@ -29,7 +29,7 @@ public class EventService implements EventServiceInterface {
         Event event = new Event(generatedId, name, location, time, ticketsAvailable);
 
         if(eventsById.containsKey(event.getId())) {
-            throw new IllegalArgumentException("models.Event with id " + event.getId() + " already exists");
+            throw new IllegalArgumentException("Event with id " + event.getId() + " already exists");
         }
 
         saveEvent(event);
@@ -46,7 +46,7 @@ public class EventService implements EventServiceInterface {
     public void updateEvent(Event event) throws IllegalArgumentException {
 
         if(!eventsById.containsKey(event.getId())) {
-            throw new IllegalArgumentException("models.Event with id " + event.getId() + " does not exist.");
+            throw new IllegalArgumentException("Event with id " + event.getId() + " does not exist.");
         }
 
         saveEvent(event);
@@ -56,7 +56,7 @@ public class EventService implements EventServiceInterface {
     public void deleteEvent(long id) throws IllegalArgumentException {
 
         if(!eventsById.containsKey(id)) {
-            throw new IllegalArgumentException("models.Event with id " + id + " does not exist.");
+            throw new IllegalArgumentException("Event with id " + id + " does not exist.");
         }
 
         idService.removeId(id);
