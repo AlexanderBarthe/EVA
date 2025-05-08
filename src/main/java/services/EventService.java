@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class EventService implements EventServiceInterface {
 
-    private static HashMap<Long, Event> eventsById = new HashMap<>();
+    private HashMap<Long, Event> eventsById = new HashMap<>();
     private final IDService idService;
 
     public EventService() {

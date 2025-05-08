@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class CustomerService implements CustomerServiceInterface {
 
-    private static HashMap<Long, Customer> customersById = new HashMap<>();
+    private HashMap<Long, Customer> customersById = new HashMap<>();
     private final IDService idService;
 
     public  CustomerService() {

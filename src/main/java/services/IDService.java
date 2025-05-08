@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class IDService {
 
     private final PrimeNumberGenerator primeGenerator;
-    private static HashSet<Long> activeIds = new HashSet<>();
+    private HashSet<Long> activeIds = new HashSet<>();
 
     private static final int MAX_GEN_ATTEMPTS = 1000;
 

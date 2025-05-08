@@ -1,6 +1,7 @@
 package services;
 
 import com.sun.jdi.InternalException;
+import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
 import models.Customer;
 import models.Event;
@@ -12,11 +13,13 @@ import java.util.HashMap;
 
 public class TicketService implements TicketServiceInterface {
 
-    private static HashMap<Long, Ticket> ticketsById = new HashMap<>();
+    private HashMap<Long, Ticket> ticketsById = new HashMap<>();
     private final IDService idService;
+    private final EventServiceInterface eventService;
 
-    public TicketService() {
+    public TicketService(EventServiceInterface eventService) {
         this.idService = new IDService();
+        this.eventService = eventService;
     }
 
     public Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException, InternalException {
@@ -28,7 +31,7 @@ public class TicketService implements TicketServiceInterface {
 
         LocalDate transactiondate = LocalDate.now();
 
-        if(event.getTicketsAvailable()==0) {
+        if(event.getTicketsAvailable()<=0) {
             throw new IllegalArgumentException("There are no tickets available for this event");
         }
 
@@ -50,6 +53,7 @@ public class TicketService implements TicketServiceInterface {
         customer.addTicket(ticket);
         event.setTicketsAvailable(event.getTicketsAvailable() - 1);
 
+        eventService.updateEvent(event);
 
         return ticket;
     }
