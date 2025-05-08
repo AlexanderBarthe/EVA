@@ -80,7 +80,7 @@ public class TicketController {
         }
         else if(args[0].equals("verify")) {
             if(args.length < 4) {
-                System.out.println("Please specify: Customer Id, Event Id");
+                System.out.println("Please specify: Ticket Id, Customer Id, Event Id");
                 return;
             }
             try {
