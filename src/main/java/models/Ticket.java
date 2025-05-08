@@ -16,6 +16,13 @@ public class Ticket {
         this.event = event;
     }
 
+    public Ticket(Ticket ticket) {
+        this.id = ticket.id;
+        this.transactiondate = ticket.transactiondate;
+        this.customer = ticket.customer;
+        this.event = ticket.event;
+    }
+
     public long getId() {
         return id;
     }

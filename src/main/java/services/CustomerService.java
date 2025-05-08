@@ -42,6 +42,9 @@ public class CustomerService {
     }
 
     public Customer getCustomerById (long id) {
+        if(!customersById.containsKey(id)) {
+            return null;
+        }
         return new Customer(customersById.get(id));
     }
     public void updateCustomer (Customer customer) throws IllegalArgumentException{

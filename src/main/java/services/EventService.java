@@ -36,6 +36,9 @@ public class EventService {
     }
 
     public Event getEventById(long id) {
+        if(!eventsById.containsKey(id)) {
+            return null;
+        }
         return new Event(eventsById.get(id));
     }
 

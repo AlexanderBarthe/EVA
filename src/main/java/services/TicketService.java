@@ -58,7 +58,10 @@ public class TicketService {
     }
 
     public Ticket getTicketById(long id) {
-        return ticketsById.get(id);
+        if(!ticketsById.containsKey(id)) {
+            return null;
+        }
+        return new Ticket(ticketsById.get(id));
     }
 
     public Collection<Ticket> getAllTickets() {
