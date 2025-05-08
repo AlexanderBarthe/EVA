@@ -11,13 +11,12 @@ import java.util.HashMap;
 
 public class TicketService {
 
-    private static HashMap<Long, Ticket> ticketsById;
+    private static HashMap<Long, Ticket> ticketsById = new HashMap<>();
     private IDService idService;
     private EventService eventService;
     private CustomerService customerService;
 
     public TicketService() {
-        this.ticketsById = new HashMap<>();
         this.idService = new IDService();
         this.eventService = new EventService();
         this.customerService = new CustomerService();

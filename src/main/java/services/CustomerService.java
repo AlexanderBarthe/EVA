@@ -9,11 +9,10 @@ import java.util.HashMap;
 
 public class CustomerService {
 
-    private static HashMap<Long, Customer> customersById;
+    private static HashMap<Long, Customer> customersById = new HashMap<>();
     private IDService idService;
 
     public  CustomerService() {
-        this.customersById = new HashMap<>();
         idService = new IDService();
     }
 
