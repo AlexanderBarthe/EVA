@@ -1,20 +1,20 @@
-import controllers.CustomerController;
-import controllers.EventController;
-import controllers.TicketController;
+package controllers;
 
 import java.util.Scanner;
 
 public class Client {
 
-    private CustomerController customerController;
-    private EventController eventController;
-    private TicketController ticketController;
+    private final TicketShop ticketShop;
+    private final EventController eventController;
+    private final CustomerController customerController;
+    private final TicketController ticketController;
 
 
     public Client() {
-        customerController = new CustomerController();
-        eventController = new EventController();
-        ticketController = new TicketController();
+        this.ticketShop = new TicketShop();
+        eventController = new EventController(ticketShop);
+        customerController = new CustomerController(ticketShop);
+        ticketController = new TicketController(ticketShop);
     }
 
     public void run() {

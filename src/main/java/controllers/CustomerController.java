@@ -1,6 +1,7 @@
 package controllers;
 
 import com.sun.jdi.InternalException;
+import interfaces.CustomerServiceInterface;
 import models.Customer;
 import services.CustomerService;
 
@@ -10,12 +11,14 @@ import java.time.format.DateTimeParseException;
 
 public class CustomerController {
 
-    private CustomerService customerService;
+    private final TicketShop ticketShop;
+    private final CustomerServiceInterface customerService;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    public CustomerController() {
-        this.customerService = new CustomerService();
+    public CustomerController(TicketShop ticketShop) {
+        this.ticketShop = ticketShop;
+        this.customerService = ticketShop.getCustomerService();
     }
 
 

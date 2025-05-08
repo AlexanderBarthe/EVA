@@ -1,3 +1,5 @@
+import controllers.Client;
+
 //Class definition
 public class Main {
 

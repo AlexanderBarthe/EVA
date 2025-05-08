@@ -1,5 +1,6 @@
 package controllers;
 
+import interfaces.EventServiceInterface;
 import models.Event;
 import services.EventService;
 
@@ -9,12 +10,14 @@ import java.time.format.DateTimeParseException;
 
 public class EventController {
 
-    private EventService eventService;
+    private final TicketShop ticketShop;
+    private final EventServiceInterface eventService;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy,HH:mm");
 
-    public EventController() {
-        eventService = new EventService();
+    public EventController(TicketShop ticketShop) {
+        this.ticketShop = ticketShop;
+        this.eventService = ticketShop.getEventService();
     }
 
 

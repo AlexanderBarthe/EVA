@@ -1,23 +1,25 @@
 package controllers;
 
 import com.sun.jdi.InternalException;
+import interfaces.CustomerServiceInterface;
+import interfaces.EventServiceInterface;
+import interfaces.TicketServiceInterface;
 import models.Customer;
 import models.Event;
 import models.Ticket;
-import services.CustomerService;
-import services.EventService;
-import services.TicketService;
-
 public class TicketController {
+
+    private final TicketShop ticketShop;
+
+    private final TicketServiceInterface ticketService;
+    private final CustomerServiceInterface customerService;
+    private final EventServiceInterface eventService;
     
-    private TicketService ticketService;
-    private CustomerService customerService;
-    private EventService eventService;
-    
-    public TicketController() {
-        this.ticketService = new TicketService();
-        this.customerService = new CustomerService();
-        this.eventService = new EventService();
+    public TicketController(TicketShop ticketShop) {
+        this.ticketShop = ticketShop;
+        this.ticketService = ticketShop.getTicketService();
+        this.customerService = ticketShop.getCustomerService();
+        this.eventService = ticketShop.getEventService();
     }
 
     public void executeString(String input) {
