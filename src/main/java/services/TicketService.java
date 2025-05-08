@@ -49,9 +49,9 @@ public class TicketService {
 
         Ticket ticket = new Ticket(generatedId, transactiondate, customer, event);
         ticketsById.put(generatedId, ticket);
-        event.setTicketsAvailable(event.getTicketsAvailable() - 1);
         event.addTicket(ticket);
         customer.addTicket(ticket);
+        event.setTicketsAvailable(event.getTicketsAvailable() - 1);
 
 
         return ticket;
