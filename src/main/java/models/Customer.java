@@ -25,6 +25,7 @@ public class Customer {
         this.username = customer.username;
         this.email = customer.email;
         this.dateofbirth = customer.dateofbirth;
+        this.tickets = customer.tickets;
     }
 
     public long getId(){
