@@ -96,6 +96,8 @@ public class TicketController {
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Please give a valid id.");
+            } catch (IllegalArgumentException e){
+                System.err.println(e.getMessage());
             }
         }
         else if(args[0].equals("delete")) {
