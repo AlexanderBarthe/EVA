@@ -42,25 +42,32 @@ public class PerformanceClient {
 
     private void test() {
 
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 100; i++) {
             eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 100000);
         }
 
-        for(int i = 0; i < 10000; i++) {
+        System.out.println(System.currentTimeMillis());
+
+        for(int i = 0; i < 1000; i++) {
             customerService.createCustomer("Username " + i, "Email@email.com", LocalDate.of(2000, 1, 1));
         }
+
+        System.out.println(System.currentTimeMillis());
 
         for(Customer customer: customerService.getAllCustomers()) {
             for(Event event: eventService.getAllEvents()) {
                 ticketService.createTicket(customer, event);
             }
         }
+        System.out.println(System.currentTimeMillis());
 
         ArrayList<Event> events = new ArrayList<>();
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 100; i++) {
             Event newEvent = eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 100000);
             events.add(newEvent);
         }
+
+        System.out.println(System.currentTimeMillis());
 
         for(Customer customer: customerService.getAllCustomers()) {
             for(Event event: events) {
