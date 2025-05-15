@@ -47,19 +47,23 @@ public class PerformanceClient {
         }
 
         System.out.println(System.currentTimeMillis());
+        System.out.println("events created");
 
         for(int i = 0; i < 1000; i++) {
             customerService.createCustomer("Username " + i, "Email@email.com", LocalDate.of(2000, 1, 1));
         }
 
         System.out.println(System.currentTimeMillis());
+        System.out.println("customers created");
 
         for(Customer customer: customerService.getAllCustomers()) {
             for(Event event: eventService.getAllEvents()) {
                 ticketService.createTicket(customer, event);
             }
         }
+
         System.out.println(System.currentTimeMillis());
+        System.out.println("100.000 tickets are ready with millions more well on the way");
 
         ArrayList<Event> events = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
@@ -68,6 +72,8 @@ public class PerformanceClient {
         }
 
         System.out.println(System.currentTimeMillis());
+        System.out.println("new events created");
+
 
         for(Customer customer: customerService.getAllCustomers()) {
             for(Event event: events) {
@@ -75,6 +81,9 @@ public class PerformanceClient {
                 ticketService.createTicket(customer, event);
             }
         }
+
+        System.out.println(System.currentTimeMillis());
+        System.out.println("done");
 
     }
 }
