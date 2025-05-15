@@ -1,53 +1,36 @@
 package utility;
 
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class PrimeNumberGenerator {
-
-    private long minNumber;
-    private long maxNumber;
-
-    private static final int MAX_GEN_ATTEMPTS = 1000;
+    private final long maxNumber;
+    private final AtomicLong nextCandidate;
 
     public PrimeNumberGenerator(long minNumber, long maxNumber) {
-        this.minNumber = minNumber;
+        if (minNumber < 2) minNumber = 2;
+        if (maxNumber < minNumber)
+            throw new IllegalArgumentException("Max number must be >= min number");
 
-        if(minNumber < 0) minNumber = 0;
-
-        if (maxNumber < minNumber) {
-            throw new IllegalArgumentException("Max number must be greater than min");
-        }
-
+        this.nextCandidate = new AtomicLong(minNumber - 1);
         this.maxNumber = maxNumber;
-
     }
 
     public long generatePrimeNumber() {
-        Random rand = new Random();
-        int remainingAttempts = MAX_GEN_ATTEMPTS;
-
-        long range = maxNumber - minNumber + 1;
-
-        while (remainingAttempts-- > 0) {
-            long candidate = Math.floorMod(rand.nextLong(), range) + minNumber;
+        long candidate;
+        while ((candidate = nextCandidate.incrementAndGet()) <= maxNumber) {
             if (isPrime(candidate)) {
                 return candidate;
             }
         }
-
-        return -1;
-
+        return -1; // keine weiteren Primes
     }
 
-    public boolean isPrime(long n) {
-
-        for(long i = 2; i <= Math.sqrt(n); i++) {
+    private boolean isPrime(long n) {
+        if (n % 2 == 0) return n == 2;
+        long limit = (long)Math.sqrt(n);
+        for (long i = 3; i <= limit; i += 2) {
             if (n % i == 0) return false;
         }
-
         return true;
-
     }
-
-
 }
