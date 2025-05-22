@@ -19,7 +19,7 @@ public class EventService implements EventServiceInterface {
 
     public EventService(LogService logService) {
         idService = new IDService();
-        this.logService = new LogService();
+        this.logService = logService;
     }
 
     @Override

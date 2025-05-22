@@ -19,7 +19,7 @@ public class CustomerService implements CustomerServiceInterface {
 
     public  CustomerService(LogService logService) {
         idService = new IDService();
-        this.logService = new LogService();
+        this.logService = logService;
     }
 
     public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException, InternalException{

@@ -6,8 +6,10 @@ public class LogService {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 
-    public LogService() {
+    private boolean loggingActive;
 
+    public LogService(boolean loggingActive) {
+        this.loggingActive = loggingActive;
     }
 
     public void log(LoggableEvent logEvent) {
@@ -17,6 +19,9 @@ public class LogService {
     }
 
     public void log(LoggableEvent logEvent, String message) {
+
+        if(!loggingActive) return;
+
         String dateTimeString = logEvent.getEventTime().format(dateTimeFormatter);
         String threadString = logEvent.getThreadString();
 

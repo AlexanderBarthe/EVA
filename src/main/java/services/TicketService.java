@@ -28,10 +28,10 @@ public class TicketService implements TicketServiceInterface {
         this.eventService = eventService;
         this.customerService = customerService;
 
-        this.logService = new LogService();
+        this.logService = logService;
     }
 
-    public Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException, InternalException {
+    public synchronized Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException, InternalException {
         long generatedId = idService.generateNewId();
 
         if(generatedId == -1) {

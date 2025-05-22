@@ -56,7 +56,7 @@ public class PerformanceClient {
     private void test() {
 
         for(int i = 0; i < 100; i++) {
-            eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 100000);
+            eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 10);
         }
 
         System.out.println(System.currentTimeMillis());
@@ -80,7 +80,7 @@ public class PerformanceClient {
 
         ArrayList<Event> events = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
-            Event newEvent = eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 100000);
+            Event newEvent = eventService.createEvent("Event " + i, "Location " + i, LocalDateTime.of(2025, 12, 12, 12, 12), 10);
             events.add(newEvent);
         }
 
@@ -118,7 +118,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            100000
+                            10
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -189,7 +189,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            100000
+                            10
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -235,6 +235,9 @@ public class PerformanceClient {
         long duration5 = System.currentTimeMillis() - startTime5;
 
         System.out.println("Schritt 5 fertig: je 2 Tickets pro Customer für jedes neue Event. Zeit: " + duration5 + " ms");
+
+        eventService.getAllEvents().stream().forEach(event -> System.out.println(event.getTicketsAvailable()));
+
 
         // alles durch, Executor sauber beenden
         executor.shutdown();
