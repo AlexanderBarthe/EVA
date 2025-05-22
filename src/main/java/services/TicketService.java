@@ -4,6 +4,8 @@ import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
+import logging.CreateTicketEvent;
+import logging.LogService;
 import models.Customer;
 import models.Event;
 import models.Ticket;
@@ -19,10 +21,14 @@ public class TicketService implements TicketServiceInterface {
     private final EventServiceInterface eventService;
     private final CustomerServiceInterface customerService;
 
-    public TicketService(EventServiceInterface eventService, CustomerServiceInterface customerService) {
+    private LogService logService;
+
+    public TicketService(EventServiceInterface eventService, CustomerServiceInterface customerService, LogService logService) {
         this.idService = new IDService();
         this.eventService = eventService;
         this.customerService = customerService;
+
+        this.logService = new LogService();
     }
 
     public Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException, InternalException {
@@ -55,6 +61,8 @@ public class TicketService implements TicketServiceInterface {
 
         customerService.updateCustomer(customer);
         eventService.updateEvent(event);
+
+        logService.log(new CreateTicketEvent(ticket));
 
         return ticket;
     }

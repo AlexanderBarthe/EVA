@@ -2,6 +2,8 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
+import logging.CreateCustomerEvent;
+import logging.LogService;
 import models.Customer;
 
 import java.time.LocalDate;
@@ -13,8 +15,11 @@ public class CustomerService implements CustomerServiceInterface {
     private Map<Long, Customer> customersById = new ConcurrentHashMap<>();
     private final IDService idService;
 
-    public  CustomerService() {
+    private LogService logService;
+
+    public  CustomerService(LogService logService) {
         idService = new IDService();
+        this.logService = new LogService();
     }
 
     public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException, InternalException{
@@ -41,6 +46,9 @@ public class CustomerService implements CustomerServiceInterface {
         }
 
         saveCustomer(customer);
+
+        logService.log(new CreateCustomerEvent(customer));
+
         return customer;
     }
 

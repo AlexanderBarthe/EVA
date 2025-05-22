@@ -2,6 +2,8 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.EventServiceInterface;
+import logging.CreateEventEvent;
+import logging.LogService;
 import models.Event;
 
 import java.time.LocalDateTime;
@@ -13,8 +15,11 @@ public class EventService implements EventServiceInterface {
     private Map<Long, Event> eventsById = new ConcurrentHashMap<>();
     private final IDService idService;
 
-    public EventService() {
+    private LogService logService;
+
+    public EventService(LogService logService) {
         idService = new IDService();
+        this.logService = new LogService();
     }
 
     @Override
@@ -33,6 +38,9 @@ public class EventService implements EventServiceInterface {
         }
 
         saveEvent(event);
+
+        logService.log(new CreateEventEvent(event));
+
         return event;
     }
 

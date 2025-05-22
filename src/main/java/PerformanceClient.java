@@ -2,6 +2,7 @@ import controllers.TicketShop;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
+import logging.LogService;
 import models.Customer;
 import models.Event;
 import models.Ticket;
@@ -15,14 +16,20 @@ import java.util.concurrent.*;
 public class PerformanceClient {
 
     private final TicketShop ticketShop;
+
+    private final LogService logService;
+
     private final EventServiceInterface eventService;
     private final CustomerServiceInterface customerService;
     private final TicketServiceInterface ticketService;
+
+
 
     private final ExecutorService executor;
 
     public PerformanceClient() {
         this.ticketShop = new TicketShop();
+        this.logService = ticketShop.getLogService();
         this.eventService = ticketShop.getEventService();
         this.customerService = ticketShop.getCustomerService();
         this.ticketService = ticketShop.getTicketService();
