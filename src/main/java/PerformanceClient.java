@@ -50,6 +50,8 @@ public class PerformanceClient {
         long endTime = System.currentTimeMillis();
         System.out.println("Total time: " + (endTime - startTime) + " ms");
 
+        eventService.getAllEvents().stream().forEach(event -> System.out.println(event.getTicketsAvailable()));
+
     }
 
 
@@ -236,7 +238,7 @@ public class PerformanceClient {
 
         System.out.println("Schritt 5 fertig: je 2 Tickets pro Customer für jedes neue Event. Zeit: " + duration5 + " ms");
 
-        eventService.getAllEvents().stream().forEach(event -> System.out.println(event.getTicketsAvailable()));
+
 
 
         // alles durch, Executor sauber beenden
