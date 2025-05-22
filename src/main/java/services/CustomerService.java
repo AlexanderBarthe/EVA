@@ -28,7 +28,9 @@ public class CustomerService implements CustomerServiceInterface {
             throw new IllegalArgumentException("User has to be 18 years old");
         }
 
-        if(!email.contains("@") || email.indexOf("@") != email.lastIndexOf("@") || !(email.lastIndexOf(".") > email.indexOf("@"))){
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        boolean validMail = email.matches(emailRegex);
+        if(!validMail){
             throw new IllegalArgumentException("Invalid email");
         }
 
