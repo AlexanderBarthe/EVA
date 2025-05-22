@@ -9,13 +9,12 @@ import models.Event;
 import models.Ticket;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TicketService implements TicketServiceInterface {
 
-    private HashMap<Long, Ticket> ticketsById = new HashMap<>();
+    private Map<Long, Ticket> ticketsById = new ConcurrentHashMap<>();
     private final IDService idService;
     private final EventServiceInterface eventService;
     private final CustomerServiceInterface customerService;
@@ -71,7 +70,7 @@ public class TicketService implements TicketServiceInterface {
     }
 
     public List<Ticket> getAllTickets() {
-        return ticketsById.values().stream().toList();
+        return new ArrayList<>(ticketsById.values());
     }
 
 

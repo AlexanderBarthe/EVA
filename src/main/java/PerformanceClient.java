@@ -26,7 +26,7 @@ public class PerformanceClient {
         this.eventService = ticketShop.getEventService();
         this.customerService = ticketShop.getCustomerService();
         this.ticketService = ticketShop.getTicketService();
-        this.executor = Executors.newFixedThreadPool(16);
+        this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     public void run() {
@@ -98,6 +98,8 @@ public class PerformanceClient {
         CountDownLatch latchStep1 = new CountDownLatch(100);
         CountDownLatch latchStep2 = new CountDownLatch(1000);
 
+        long startTime1 = System.currentTimeMillis();
+
         // Schritt 1: 100 Events erzeugen
         for (int i = 1; i <= 100; i++) {
             final int idx = i;
@@ -107,7 +109,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            500
+                            100000
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -133,11 +135,16 @@ public class PerformanceClient {
         // warte auf beide Gruppen
         latchStep1.await();
         latchStep2.await();
-        System.out.println("Schritt 1+2 fertig: 100 Events und 1000 Customers erstellt.");
+
+        long duration1 = System.currentTimeMillis() - startTime1;
+
+        System.out.println("Schritt 1+2 fertig: 100 Events und 1000 Customers erstellt. Zeit: " + duration1 + " ms");
 
         // hole Snapshots
         List<Event>    firstEvents    = eventService.getAllEvents();
         List<Customer> allCustomers   = customerService.getAllCustomers();
+
+        long startTime3 = System.currentTimeMillis();
 
         // --- Schritt 3: für jeden Customer ein Ticket pro vorhandenem Event ---
         CountDownLatch latchStep3 = new CountDownLatch(firstEvents.size() * allCustomers.size());
@@ -155,9 +162,15 @@ public class PerformanceClient {
             }
         }
         latchStep3.await();
-        System.out.println("Schritt 3 fertig: je 1 Ticket für jeden Customer pro Event.");
+
+        long duration3 = System.currentTimeMillis() - startTime3;
+
+        System.out.println("Schritt 3 fertig: je 1 Ticket für jeden Customer pro Event. Zeit: " + duration3 + " ms");
 
         // --- Schritt 4: weitere 100 Events erzeugen ---
+
+        long startTime4 = System.currentTimeMillis();
+
         CountDownLatch latchStep4 = new CountDownLatch(100);
         for (int i = 101; i <= 200; i++) {
             final int idx = i;
@@ -167,7 +180,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            500
+                            1000000
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -177,13 +190,19 @@ public class PerformanceClient {
             });
         }
         latchStep4.await();
-        System.out.println("Schritt 4 fertig: zusätzliche 100 Events erstellt.");
+
+        long duration4 = System.currentTimeMillis() - startTime4;
+
+        System.out.println("Schritt 4 fertig: zusätzliche 100 Events erstellt. Zeit: " + duration4 + " ms");
 
         // hole die neuen Events allein
         List<Event> newEvents = eventService.getAllEvents()
                 .subList(firstEvents.size(), firstEvents.size() + 100);
 
         // --- Schritt 5: je 2 Tickets pro Customer für jedes neue Event ---
+
+        long startTime5 = System.currentTimeMillis();
+
         CountDownLatch latchStep5 = new CountDownLatch(newEvents.size() * allCustomers.size() * 2);
         for (Event e : newEvents) {
             for (Customer c : allCustomers) {
@@ -203,7 +222,10 @@ public class PerformanceClient {
             }
         }
         latchStep5.await();
-        System.out.println("Schritt 5 fertig: je 2 Tickets pro Customer für jedes neue Event.");
+
+        long duration5 = System.currentTimeMillis() - startTime5;
+
+        System.out.println("Schritt 5 fertig: je 2 Tickets pro Customer für jedes neue Event. Zeit: " + duration5 + " ms");
 
         // alles durch, Executor sauber beenden
         executor.shutdown();

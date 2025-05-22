@@ -5,13 +5,12 @@ import interfaces.EventServiceInterface;
 import models.Event;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EventService implements EventServiceInterface {
 
-    private HashMap<Long, Event> eventsById = new HashMap<>();
+    private Map<Long, Event> eventsById = new ConcurrentHashMap<>();
     private final IDService idService;
 
     public EventService() {
@@ -66,7 +65,7 @@ public class EventService implements EventServiceInterface {
 
 
     public List<Event> getAllEvents() {
-        return eventsById.values().stream().toList();
+        return new ArrayList<>(eventsById.values());
     }
 
     public void deleteAllEvents() {

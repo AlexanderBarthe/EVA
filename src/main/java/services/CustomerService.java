@@ -5,13 +5,12 @@ import interfaces.CustomerServiceInterface;
 import models.Customer;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CustomerService implements CustomerServiceInterface {
 
-    private HashMap<Long, Customer> customersById = new HashMap<>();
+    private Map<Long, Customer> customersById = new ConcurrentHashMap<>();
     private final IDService idService;
 
     public  CustomerService() {
@@ -69,7 +68,7 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     public List<Customer> getAllCustomers() {
-        return customersById.values().stream().toList();
+        return new ArrayList<>(customersById.values());
     }
 
     public void deleteAllCustomers() {
