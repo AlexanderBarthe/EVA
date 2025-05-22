@@ -3,12 +3,13 @@ package interfaces;
 import models.Event;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface EventServiceInterface {
     Event createEvent(String name, String location, LocalDateTime time, int ticketsAvailable) throws IllegalArgumentException;
     Event getEventById(long id);
     void updateEvent(Event event) throws IllegalArgumentException;
     void deleteEvent(long id) throws IllegalArgumentException;
-    Iterable<Event> getAllEvents();
+    List<Event> getAllEvents();
     void deleteAllEvents();
 }

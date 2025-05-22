@@ -4,6 +4,7 @@ import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
 import models.Customer;
 import models.Event;
+import models.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,18 +19,25 @@ public class PerformanceClient {
     private final CustomerServiceInterface customerService;
     private final TicketServiceInterface ticketService;
 
+    private final ExecutorService executor;
+
     public PerformanceClient() {
         this.ticketShop = new TicketShop();
         this.eventService = ticketShop.getEventService();
         this.customerService = ticketShop.getCustomerService();
         this.ticketService = ticketShop.getTicketService();
+        this.executor = Executors.newFixedThreadPool(16);
     }
 
     public void run() {
         System.out.println("Starting performance test...");
         long startTime = System.currentTimeMillis();
 
-        test();
+        try {
+            testParallel();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         long endTime = System.currentTimeMillis();
         System.out.println("Total time: " + (endTime - startTime) + " ms");
@@ -84,82 +92,139 @@ public class PerformanceClient {
     }
 
 
-    private void testParallel() {
+    private void testParallel() throws InterruptedException {
 
-        long startTimestamp = System.currentTimeMillis();
+        // --- Schritt 1 + 2 parallel starten ---
+        CountDownLatch latchStep1 = new CountDownLatch(100);
+        CountDownLatch latchStep2 = new CountDownLatch(1000);
 
-        int cores = Runtime.getRuntime().availableProcessors();
-        System.out.println("Verwende " + cores + " Threads im ThreadPool");
-        ExecutorService executor;
-
-        // Create events
-        executor = Executors.newFixedThreadPool(cores);
-        for (int i = 0; i < 100; i++) {
+        // Schritt 1: 100 Events erzeugen
+        for (int i = 1; i <= 100; i++) {
             final int idx = i;
-            executor.submit(() -> eventService.createEvent(
-                    "Event " + idx,
-                    "Location " + idx,
-                    LocalDateTime.of(2025, 12, 12, 12, 12),
-                    100000));
-        }
-        executor.shutdown();
-        System.out.println("1. Elapsed time: " + (System.currentTimeMillis() - startTimestamp) + " ms");
-
-        //Create customers
-        executor = Executors.newFixedThreadPool(cores);
-        for (int i = 0; i < 1000; i++) {
-            final int idx = i;
-            executor.submit(() -> customerService.createCustomer(
-                    "Username " + idx,
-                    "Email@email.com",
-                    LocalDate.of(2000, 1, 1)));
-        }
-        executor.shutdown();
-        System.out.println("2. Elapsed time: " + (System.currentTimeMillis() - startTimestamp) + " ms");
-
-        //Create tickets
-        List<Customer> snapshotCustomers = new ArrayList<>();
-        for (Customer c : customerService.getAllCustomers()) {
-            snapshotCustomers.add(c);
-        }
-        List<Event> snapshotEvents = new ArrayList<>();
-        for (Event e : eventService.getAllEvents()) {
-            snapshotEvents.add(e);
-        }
-
-        executor = Executors.newFixedThreadPool(cores);
-        for (Customer c : snapshotCustomers) {
             executor.submit(() -> {
-                for (Event e : snapshotEvents) {
-                    ticketService.createTicket(c, e);
+                try {
+                    eventService.createEvent(
+                            "Event " + idx,
+                            "Location " + idx,
+                            LocalDateTime.now().plusDays(idx),
+                            500
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    latchStep1.countDown();
                 }
             });
         }
-        executor.shutdown();
-        System.out.println("3. Elapsed time: " + (System.currentTimeMillis() - startTimestamp) + " ms");
 
-        //Create more events
-        List<Event> newEvents = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Event ev = eventService.createEvent(
-                    "Event " + i,
-                    "Location " + i,
-                    LocalDateTime.of(2025, 12, 12, 12, 12),
-                    100000);
-            newEvents.add(ev);
-        }
-        System.out.println("4. Elapsed time: " + (System.currentTimeMillis() - startTimestamp) + " ms");
-
-        //Buy new tickets twice fe customer
-        executor = Executors.newFixedThreadPool(cores);
-        for (Customer c : snapshotCustomers) {
+        // Schritt 2: 1000 Customers erzeugen
+        for (int i = 1; i <= 1000; i++) {
+            final int idx = i;
             executor.submit(() -> {
-                for (Event e : newEvents) {
-                    ticketService.createTicket(c, e);
-                    ticketService.createTicket(c, e);
+                customerService.createCustomer(
+                        "Customer" + idx,
+                        "customer" + idx + "@example.com",
+                        LocalDate.of(1994, 10, 1)
+                );
+                latchStep2.countDown();
+            });
+        }
+
+        // warte auf beide Gruppen
+        latchStep1.await();
+        latchStep2.await();
+        System.out.println("Schritt 1+2 fertig: 100 Events und 1000 Customers erstellt.");
+
+        // hole Snapshots
+        List<Event>    firstEvents    = eventService.getAllEvents();
+        List<Customer> allCustomers   = customerService.getAllCustomers();
+
+        // --- Schritt 3: für jeden Customer ein Ticket pro vorhandenem Event ---
+        CountDownLatch latchStep3 = new CountDownLatch(firstEvents.size() * allCustomers.size());
+        for (Event e : firstEvents) {
+            for (Customer c : allCustomers) {
+                executor.submit(() -> {
+                    try {
+                        ticketService.createTicket(c, e);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    } finally {
+                        latchStep3.countDown();
+                    }
+                });
+            }
+        }
+        latchStep3.await();
+        System.out.println("Schritt 3 fertig: je 1 Ticket für jeden Customer pro Event.");
+
+        // --- Schritt 4: weitere 100 Events erzeugen ---
+        CountDownLatch latchStep4 = new CountDownLatch(100);
+        for (int i = 101; i <= 200; i++) {
+            final int idx = i;
+            executor.submit(() -> {
+                try {
+                    eventService.createEvent(
+                            "Event " + idx,
+                            "Location " + idx,
+                            LocalDateTime.now().plusDays(idx),
+                            500
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    latchStep4.countDown();
                 }
             });
         }
+        latchStep4.await();
+        System.out.println("Schritt 4 fertig: zusätzliche 100 Events erstellt.");
+
+        // hole die neuen Events allein
+        List<Event> newEvents = eventService.getAllEvents()
+                .subList(firstEvents.size(), firstEvents.size() + 100);
+
+        // --- Schritt 5: je 2 Tickets pro Customer für jedes neue Event ---
+        CountDownLatch latchStep5 = new CountDownLatch(newEvents.size() * allCustomers.size() * 2);
+        for (Event e : newEvents) {
+            for (Customer c : allCustomers) {
+                // zwei Tickets
+                executor.submit(() -> {
+                    try {
+                        ticketService.createTicket(c, e);
+                        ticketService.createTicket(c, e);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    } finally {
+                        // countdown zweimal
+                        latchStep5.countDown();
+                        latchStep5.countDown();
+                    }
+                });
+            }
+        }
+        latchStep5.await();
+        System.out.println("Schritt 5 fertig: je 2 Tickets pro Customer für jedes neue Event.");
+
+        // alles durch, Executor sauber beenden
         executor.shutdown();
+        if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+            executor.shutdownNow();
+        }
+
+    }
+
+    public void endExecutor(ExecutorService executor) {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+                if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                    System.err.println("Executor did not terminate!");
+                }
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
     }
 }

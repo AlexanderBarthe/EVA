@@ -11,6 +11,7 @@ import models.Ticket;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class TicketService implements TicketServiceInterface {
 
@@ -69,8 +70,8 @@ public class TicketService implements TicketServiceInterface {
         return new Ticket(ticketsById.get(id));
     }
 
-    public Collection<Ticket> getAllTickets() {
-        return ticketsById.values();
+    public List<Ticket> getAllTickets() {
+        return ticketsById.values().stream().toList();
     }
 
 

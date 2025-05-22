@@ -7,6 +7,7 @@ import models.Event;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class EventService implements EventServiceInterface {
 
@@ -64,8 +65,8 @@ public class EventService implements EventServiceInterface {
     }
 
 
-    public Collection<Event> getAllEvents() {
-        return eventsById.values();
+    public List<Event> getAllEvents() {
+        return eventsById.values().stream().toList();
     }
 
     public void deleteAllEvents() {

@@ -7,6 +7,7 @@ import models.Customer;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class CustomerService implements CustomerServiceInterface {
 
@@ -67,8 +68,8 @@ public class CustomerService implements CustomerServiceInterface {
         customersById.remove(id);
     }
 
-    public Collection<Customer> getAllCustomers() {
-        return customersById.values();
+    public List<Customer> getAllCustomers() {
+        return customersById.values().stream().toList();
     }
 
     public void deleteAllCustomers() {
