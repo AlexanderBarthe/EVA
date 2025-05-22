@@ -67,7 +67,7 @@ public class IDService {
         activeIds.remove(id);
     }
 
-    public synchronized boolean containsId(long id) {
+    public boolean containsId(long id) {
         return activeIds.contains(id);
     }
 
