@@ -49,7 +49,7 @@ public class PerformanceClient {
 
         long endTime = System.currentTimeMillis();
         System.out.println("Total time: " + (endTime - startTime) + " ms");
-        System.out.println("Available tickets for event 1: " + eventService.getAllEvents().get(0).getTicketsAvailable());
+
     }
 
 
@@ -189,7 +189,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            1000000
+                            100000
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -205,8 +205,8 @@ public class PerformanceClient {
         System.out.println("Schritt 4 fertig: zusätzliche 100 Events erstellt. Zeit: " + duration4 + " ms");
 
         // hole die neuen Events allein
-        List<Event> newEvents = eventService.getAllEvents()
-                .subList(firstEvents.size(), firstEvents.size() + 100);
+        List<Event> newEvents = eventService.getAllEvents();
+        newEvents.removeIf(firstEvents::contains);
 
         // --- Schritt 5: je 2 Tickets pro Customer für jedes neue Event ---
 
