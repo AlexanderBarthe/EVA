@@ -34,16 +34,12 @@ public class TicketService implements TicketServiceInterface {
 
         LocalDate transactiondate = LocalDate.now();
 
-        if(event.getTicketsAvailable()<=0) {
+        if(event.getTicketsAvailable().get()<=0) {
             throw new IllegalArgumentException("There are no tickets available for this event");
         }
 
-        int ticketsForEvent = 0;
-        for(Ticket ticket: customer.getTickets()){
-            if(ticket.getEvent().getId() == event.getId()){
-                ticketsForEvent++;
-            }
-        }
+        int ticketsForEvent;
+        ticketsForEvent = customer.getTicketPerEvent().getOrDefault(event.getId(), 0);
 
         if(ticketsForEvent >= 5) {
             throw new IllegalArgumentException("Customer already has 5 tickets for the event");
@@ -54,7 +50,8 @@ public class TicketService implements TicketServiceInterface {
         ticketsById.put(generatedId, ticket);
         event.addTicket(ticket);
         customer.addTicket(ticket);
-        event.setTicketsAvailable(event.getTicketsAvailable() - 1);
+        customer.setTicketPerEvent(event.getId(), ticketsForEvent + 1);
+        event.getTicketsAvailable().decrementAndGet();
 
         customerService.updateCustomer(customer);
         eventService.updateEvent(event);

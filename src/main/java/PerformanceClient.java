@@ -33,6 +33,7 @@ public class PerformanceClient {
         System.out.println("Starting performance test...");
         long startTime = System.currentTimeMillis();
 
+        //test();
         try {
             testParallel();
         } catch (InterruptedException e) {
@@ -41,6 +42,7 @@ public class PerformanceClient {
 
         long endTime = System.currentTimeMillis();
         System.out.println("Total time: " + (endTime - startTime) + " ms");
+        System.out.println("Available tickets for event 1: " + eventService.getAllEvents().get(0).getTicketsAvailable());
     }
 
 

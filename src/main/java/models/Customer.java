@@ -3,6 +3,8 @@ package models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Customer {
 
@@ -11,6 +13,7 @@ public class Customer {
     private String email;
     private LocalDate dateofbirth;
     private List<Ticket> tickets;
+    private Map<Long, Integer> ticketPerEvent;
 
     public Customer(long id, String username, String email, LocalDate birth) {
         this.id = id;
@@ -18,6 +21,7 @@ public class Customer {
         this.email = email;
         this.dateofbirth = birth;
         this.tickets = new ArrayList<>();
+        this.ticketPerEvent = new ConcurrentHashMap<>();
     }
 
     public Customer(Customer customer) {
@@ -26,6 +30,7 @@ public class Customer {
         this.email = customer.email;
         this.dateofbirth = customer.dateofbirth;
         this.tickets = customer.tickets;
+        this.ticketPerEvent = customer.getTicketPerEvent();
     }
 
     public long getId(){
@@ -56,6 +61,15 @@ public class Customer {
     public List<Ticket> getTickets() {
         return tickets;
     }
+
+    public Map<Long, Integer> getTicketPerEvent() {
+        return ticketPerEvent;
+    }
+
+    public void setTicketPerEvent(Long eventId, Integer ticketcount) {
+        ticketPerEvent.put(eventId, ticketcount);
+    }
+
 
     @Override
     public String toString(){

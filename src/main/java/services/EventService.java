@@ -79,7 +79,7 @@ public class EventService implements EventServiceInterface {
             throw new IllegalArgumentException("This date is already in the past.");
         }
 
-        if(event.getTicketsAvailable() < 0) {
+        if(event.getTicketsAvailable().get() < 0) {
             throw new IllegalArgumentException("Amount of tickets cannot be negative.");
         }
 
