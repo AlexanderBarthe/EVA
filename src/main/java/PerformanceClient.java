@@ -163,7 +163,7 @@ public class PerformanceClient {
                     try {
                         ticketService.createTicket(c, e);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        System.out.println(ex.getMessage());
                     } finally {
                         latchStep3.countDown();
                     }
@@ -192,7 +192,7 @@ public class PerformanceClient {
                             10
                     );
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 } finally {
                     latchStep4.countDown();
                 }
@@ -221,7 +221,7 @@ public class PerformanceClient {
                         ticketService.createTicket(c, e);
                         ticketService.createTicket(c, e);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        System.out.println(ex.getMessage());
                     } finally {
                         // countdown zweimal
                         latchStep5.countDown();
