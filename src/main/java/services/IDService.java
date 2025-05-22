@@ -13,8 +13,8 @@ public class IDService {
     private final Queue<Long> availableIds = new ConcurrentLinkedQueue<>();
 
     private static final int MAX_GEN_ATTEMPTS = 1000;
-    private static final int MIN_POOL_SIZE = 1000;
-    private static final int FILL_BATCH_SIZE = 20000;
+    private static final int MIN_POOL_SIZE = 10000;
+    private static final int FILL_BATCH_SIZE = 400000;
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -61,6 +61,8 @@ public class IDService {
                 generated++;
             }
         }
+
+        System.out.println("Refilled id pool");
     }
 
     public synchronized void removeId(long id) {
