@@ -17,12 +17,13 @@ public class LogService {
 
     private static File logFile;
 
-
+    private BufferedWriter writer;
 
     public LogService(boolean loggingActive) {
         logFileName = dateTimeFormatter.format(java.time.LocalDateTime.now()) + ".log";
         this.loggingActive = loggingActive;
-        initFile();
+        init();
+
     }
 
     /**
@@ -30,7 +31,7 @@ public class LogService {
      * Crates dir if not existing and new log file.
      *
      */
-    public void initFile() {
+    public void init() {
         File dir = new File(logFilePath);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -45,6 +46,12 @@ public class LogService {
             }
         }
         logFile = file;
+
+        try {
+            writer = new BufferedWriter(new FileWriter(logFile, true));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void log(LoggableEvent logEvent) {
@@ -57,17 +64,25 @@ public class LogService {
 
         if(!loggingActive) return;
 
-        //Write time, origin, log level and description
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+        try {
             writer.write(
-                    "[" + event.getEventTime().format(dateTimeFormatter) + "] "
-                            + "[" + event.getEventName() + " - " + event.getIdReference() + "] "
-                            + message + " (Thread: "
-                            + event.getThreadString() + ")\n");
+                        "[" + event.getEventTime().format(dateTimeFormatter) + "] "
+                                + "[" + event.getEventName() + " - " + event.getIdReference() + "] "
+                                + message + " (Thread: "
+                                + event.getThreadString() + ")\n");
+        } catch (IOException ignored) {
+
+        }
+
+
+    }
+
+    public void close() {
+        try {
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 

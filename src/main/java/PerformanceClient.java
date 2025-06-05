@@ -52,6 +52,8 @@ public class PerformanceClient {
 
         eventService.getAllEvents().stream().forEach(event -> System.out.println(event.getTicketsAvailable()));
 
+        logService.close();
+
     }
 
 
