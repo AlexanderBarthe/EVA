@@ -14,11 +14,7 @@ public class Main {
         PerformanceClient performanceClient = new PerformanceClient();
         performanceClient.run();
 
+        System.exit(0);
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

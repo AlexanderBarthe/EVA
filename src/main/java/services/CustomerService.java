@@ -2,7 +2,7 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
-import logging.CreateCustomerEvent;
+import logging.events.CreateCustomerEvent;
 import logging.LogService;
 import models.Customer;
 

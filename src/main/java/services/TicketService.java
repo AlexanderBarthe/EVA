@@ -4,7 +4,7 @@ import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
-import logging.CreateTicketEvent;
+import logging.events.CreateTicketEvent;
 import logging.LogService;
 import models.Customer;
 import models.Event;

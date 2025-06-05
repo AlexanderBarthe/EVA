@@ -1,29 +1,31 @@
-package logging;
+package logging.events;
 
-import models.Ticket;
+import logging.LoggableEvent;
+import models.Event;
 
 import java.time.LocalDateTime;
 
-public class CreateTicketEvent implements LoggableEvent {
+public class CreateEventEvent implements LoggableEvent {
 
-    private Ticket ticket;
+    private Event event;
     private LocalDateTime eventTime;
     private String threadString;
 
-    public CreateTicketEvent(Ticket ticket) {
-        this.ticket = ticket;
+    public CreateEventEvent(Event event) {
+        this.event = event;
         this.eventTime = LocalDateTime.now();
         this.threadString = Thread.currentThread().getId() + ":" + Thread.currentThread().getName();
     }
 
+
     @Override
     public long getIdReference() {
-        return ticket.getId();
+        return event.getId();
     }
 
     @Override
     public String getEventName() {
-        return "Create-Ticket";
+        return "Create-Event";
     }
 
     @Override
@@ -35,5 +37,4 @@ public class CreateTicketEvent implements LoggableEvent {
     public String getThreadString() {
         return threadString;
     }
-
 }

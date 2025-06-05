@@ -2,7 +2,7 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.EventServiceInterface;
-import logging.CreateEventEvent;
+import logging.events.CreateEventEvent;
 import logging.LogService;
 import models.Event;
 

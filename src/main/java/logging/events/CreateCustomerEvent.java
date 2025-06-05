@@ -1,5 +1,6 @@
-package logging;
+package logging.events;
 
+import logging.LoggableEvent;
 import models.Customer;
 
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class CreateCustomerEvent implements LoggableEvent {
 
     @Override
     public String getThreadString() {
-        return "";
+        return threadString;
     }
 
 
