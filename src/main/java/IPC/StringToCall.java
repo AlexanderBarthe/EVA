@@ -78,7 +78,7 @@ public class StringToCall {
             }
             default: throw new IllegalArgumentException("Invalid method name");
         }
-        
+
     }
 
     private String callEventMethod(String[] args) throws  Exception {
@@ -90,11 +90,11 @@ public class StringToCall {
                     if(methodArguments.length < 3) throw new IllegalArgumentException("Missing arguments");
                     return eventService.createEvent(methodArguments[0], methodArguments[1], LocalDateTime.parse(methodArguments[2]), Integer.parseInt(methodArguments[3])).toString();
                 }
-                case "getById": {
+                case "getbyid": {
                     if(methodArguments.length < 1) throw new IllegalArgumentException("Missing arguments");
                     return eventService.getEventById(Long.parseLong(methodArguments[0])).toString();
                 }
-                case "getAll": {
+                case "getall": {
                     StringBuilder output = new StringBuilder();
                     eventService.getAllEvents().forEach(e -> output.append(e + ";"));
                     return output.toString();
@@ -104,7 +104,7 @@ public class StringToCall {
                     eventService.deleteEvent(Long.parseLong(methodArguments[0]));
                     return "Success";
                 }
-                case "deleteAll": {
+                case "deleteall": {
                     eventService.deleteAllEvents();
                     return "All Events deleted";
                 }
