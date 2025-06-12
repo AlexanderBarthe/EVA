@@ -52,8 +52,9 @@ public class PerformanceClient {
         System.out.println("Starting performance test...");
         long startTime = System.currentTimeMillis();
 
-        //test();
+
         try {
+            //test();
             testParallel();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -222,7 +223,12 @@ public class PerformanceClient {
 
         // hole die neuen Events allein
         List<Event> newEvents = eventService.getAllEvents();
-        newEvents.removeIf(firstEvents::contains);
+
+        for(Event e : eventService.getAllEvents()) {
+            if(!firstEvents.contains(e)) {
+                newEvents.add(e);
+            }
+        }
 
         // --- Schritt 5: je 2 Tickets pro Customer für jedes neue Event ---
 

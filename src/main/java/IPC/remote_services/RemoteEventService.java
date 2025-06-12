@@ -6,6 +6,7 @@ import models.Event;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteEventService implements EventServiceInterface {
@@ -47,7 +48,17 @@ public class RemoteEventService implements EventServiceInterface {
 
     @Override
     public List<Event> getAllEvents() {
-        return List.of();
+        try {
+            String response = client.send("event;getall;");
+            String[] eventStrings = response.split(";");
+            List<Event> events = new ArrayList<>();
+            for (String eventString : eventStrings) {
+                events.add(Event.fromString(eventString));
+            }
+            return events;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

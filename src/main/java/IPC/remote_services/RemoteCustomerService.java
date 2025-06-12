@@ -4,7 +4,9 @@ import IPC.TCPClient;
 import interfaces.CustomerServiceInterface;
 import models.Customer;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteCustomerService implements CustomerServiceInterface {
@@ -18,7 +20,12 @@ public class RemoteCustomerService implements CustomerServiceInterface {
 
     @Override
     public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException {
-        return null;
+        try {
+            String response = tcpClient.send("customer;create;" + username + "," + email + "," + dateofbirth);
+            return Customer.fromString(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -38,7 +45,20 @@ public class RemoteCustomerService implements CustomerServiceInterface {
 
     @Override
     public List<Customer> getAllCustomers() {
-        return List.of();
+
+        try {
+            String response = tcpClient.send("customer;getall;");
+            String[] customerString = response.split(";");
+            List<Customer> customers = new ArrayList<>();
+            for(String s : customerString) {
+                customers.add(Customer.fromString(s));
+            }
+            return customers;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

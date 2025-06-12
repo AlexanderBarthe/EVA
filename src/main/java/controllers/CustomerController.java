@@ -23,7 +23,7 @@ public class CustomerController {
 
     public void executeString(String[] args) {
 
-        if(args.length == 0 || args[1].isEmpty()) {
+        if(args.length == 0 /*|| args[1].isEmpty()*/) {
             System.out.println("Invalid command. Use \"customer create/get/update/delete/listAll/deleteAll\" to execute a command.");
             return;
         }
