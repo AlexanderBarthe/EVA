@@ -2,7 +2,6 @@ package controllers;
 
 import interfaces.EventServiceInterface;
 import models.Event;
-import services.EventService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

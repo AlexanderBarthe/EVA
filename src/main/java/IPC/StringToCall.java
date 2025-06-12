@@ -37,7 +37,7 @@ public class StringToCall {
             case "customer": return callCustomerMethod(args);
             case "event": return callEventMethod(args);
             case "ticket": return callTicketMethod(args);
-            default: throw new IllegalArgumentException("Unknown Service");
+            default: throw new IllegalArgumentException("Unknown Service: " + args[0]);
 
         }
 
@@ -55,7 +55,7 @@ public class StringToCall {
                 if(methodArguments.length < 3) throw new IllegalArgumentException("Missing arguments");
                 return customerService.createCustomer(args[0], args[1], LocalDate.parse(args[2])).toString();
             }
-            case "getById": {
+            case "getbyid": {
                 if(methodArguments.length < 1) throw new IllegalArgumentException("Missing arguments");
                 return customerService.getCustomerById(Long.parseLong(methodArguments[0])).toString();
             }
@@ -67,12 +67,12 @@ public class StringToCall {
                 customerService.deleteCustomer(Long.parseLong(methodArguments[0]));
                 return "Success";
             }
-            case "getAll": {
+            case "getall": {
                 StringBuilder output = new StringBuilder();
                 customerService.getAllCustomers().forEach(c -> output.append(c.toString() + ";"));
                 return output.toString();
             }
-            case "deleteAll": {
+            case "deleteall": {
                 customerService.deleteAllCustomers();
                 return "Success";
             }
@@ -128,10 +128,10 @@ public class StringToCall {
 
                 return ticketService.createTicket(customer, event).toString();
             }
-            case "getById": {
+            case "getbyid": {
                 return ticketService.getTicketById(Long.parseLong(methodArguments[0])).toString();
             }
-            case "getAll": {
+            case "getall": {
                 StringBuilder output = new StringBuilder();
                 ticketService.getAllTickets().forEach(t -> output.append(t.toString() + ";"));
                 return output.toString();
@@ -140,7 +140,7 @@ public class StringToCall {
                 ticketService.deleteTicket(Long.parseLong(methodArguments[0]));
                 return "Success";
             }
-            case "deleteAll": {
+            case "deleteall": {
                 ticketService.deleteAllTickets();
                 return "Success";
             }

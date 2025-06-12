@@ -4,14 +4,16 @@ import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
-import logging.events.CreateTicketEvent;
 import logging.LogService;
+import logging.events.CreateTicketEvent;
 import models.Customer;
 import models.Event;
 import models.Ticket;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TicketService implements TicketServiceInterface {

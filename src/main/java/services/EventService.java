@@ -2,12 +2,14 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.EventServiceInterface;
-import logging.events.CreateEventEvent;
 import logging.LogService;
+import logging.events.CreateEventEvent;
 import models.Event;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EventService implements EventServiceInterface {

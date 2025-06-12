@@ -5,13 +5,15 @@ import interfaces.TicketServiceInterface;
 import logging.LogService;
 import models.Customer;
 import models.Event;
-import models.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class PerformanceClient {
 

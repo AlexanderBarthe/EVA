@@ -3,7 +3,6 @@ package controllers;
 import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
 import models.Customer;
-import services.CustomerService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

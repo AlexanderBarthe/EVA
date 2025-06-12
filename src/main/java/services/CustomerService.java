@@ -2,12 +2,14 @@ package services;
 
 import com.sun.jdi.InternalException;
 import interfaces.CustomerServiceInterface;
-import logging.events.CreateCustomerEvent;
 import logging.LogService;
+import logging.events.CreateCustomerEvent;
 import models.Customer;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CustomerService implements CustomerServiceInterface {
