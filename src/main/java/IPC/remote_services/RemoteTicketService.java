@@ -6,6 +6,8 @@ import models.Customer;
 import models.Event;
 import models.Ticket;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteTicketService implements TicketServiceInterface {
@@ -18,7 +20,12 @@ public class RemoteTicketService implements TicketServiceInterface {
 
     @Override
     public Ticket createTicket(Customer customer, Event event) throws IllegalArgumentException {
-        return null;
+        try {
+            String response = tcpClient.send("ticket;create;" + customer.getId() + "," + event.getId());
+            return Ticket.fromString(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -28,7 +35,18 @@ public class RemoteTicketService implements TicketServiceInterface {
 
     @Override
     public List<Ticket> getAllTickets() {
-        return List.of();
+        try {
+            String response = tcpClient.send("ticket;getall;");
+            String[] ticketStrings =  response.split(";");
+            List<Ticket> tickets = new ArrayList<>();
+            for (String ticketString : ticketStrings) {
+                tickets.add(Ticket.fromString(ticketString));
+            }
+            return tickets;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

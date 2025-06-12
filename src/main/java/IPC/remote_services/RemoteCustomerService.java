@@ -22,7 +22,6 @@ public class RemoteCustomerService implements CustomerServiceInterface {
     public Customer createCustomer(String username, String email, LocalDate dateofbirth) throws IllegalArgumentException {
         try {
             String response = tcpClient.send("customer;create;" + username + "," + email + "," + dateofbirth);
-            System.out.println(response);
             return Customer.fromString(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
