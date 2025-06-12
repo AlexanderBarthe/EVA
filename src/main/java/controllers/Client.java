@@ -11,8 +11,8 @@ public class Client {
     private final TicketController ticketController;
 
 
-    public Client() {
-        this.ticketShop = new TicketShop();
+    public Client(TicketShop ticketshop) {
+        this.ticketShop = ticketshop;
         eventController = new EventController(ticketShop);
         customerController = new CustomerController(ticketShop);
         ticketController = new TicketController(ticketShop);

@@ -52,13 +52,15 @@ public class PerformanceClient {
         System.out.println("Starting performance test...");
         long startTime = System.currentTimeMillis();
 
+        test();
 
+        /*
         try {
-            //test();
-            testParallel();
+
+            //testParallel();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         long endTime = System.currentTimeMillis();
         System.out.println("Total time: " + (endTime - startTime) + " ms");

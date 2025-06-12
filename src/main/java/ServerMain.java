@@ -9,10 +9,12 @@ public class ServerMain {
 
     public static void main(String[] args){
 
-        TCPHost server = new TCPHost(12345, new TicketShop());
+        TicketShop ticketShop = new TicketShop();
+
+        TCPHost server = new TCPHost(12345, ticketShop);
         server.start();
 
-        Client consoleClient = new Client();
+        Client consoleClient = new Client(ticketShop);
         consoleClient.run();
     }
 }
