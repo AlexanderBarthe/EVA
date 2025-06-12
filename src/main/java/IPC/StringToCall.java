@@ -53,7 +53,7 @@ public class StringToCall {
 
             case "create": {
                 if(methodArguments.length < 3) throw new IllegalArgumentException("Missing arguments");
-                return customerService.createCustomer(args[0], args[1], LocalDate.parse(args[2])).toString();
+                return customerService.createCustomer(methodArguments[0], methodArguments[1], LocalDate.parse(methodArguments[2])).toString();
             }
             case "getbyid": {
                 if(methodArguments.length < 1) throw new IllegalArgumentException("Missing arguments");

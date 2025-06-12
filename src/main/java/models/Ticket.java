@@ -57,20 +57,20 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "Ticket[" +
                 "id=" + id +
                 ", transactiondate=" + transactiondate +
                 ", customer=" + customer +
                 ", event=" + event +
-                '}';
+                ']';
     }
 
     public static Ticket fromString(String string) {
         if (string == null) {
             throw new IllegalArgumentException("Input string is null");
         }
-        String prefix = "Ticket{";
-        String suffix = "}";
+        String prefix = "Ticket[";
+        String suffix = "]";
         if (!string.startsWith(prefix) || !string.endsWith(suffix)) {
             throw new IllegalArgumentException("String does not start with \"" + prefix + "\" or end with \"" + suffix + "\"");
         }
