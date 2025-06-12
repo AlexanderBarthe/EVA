@@ -1,3 +1,4 @@
+import IPC.TCPClient;
 import controllers.TicketShop;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
@@ -31,6 +32,15 @@ public class PerformanceClient {
 
     public PerformanceClient() {
         this.ticketShop = new TicketShop();
+        this.logService = ticketShop.getLogService();
+        this.eventService = ticketShop.getEventService();
+        this.customerService = ticketShop.getCustomerService();
+        this.ticketService = ticketShop.getTicketService();
+        this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    }
+
+    public PerformanceClient(TCPClient client) {
+        this.ticketShop = new TicketShop(client);
         this.logService = ticketShop.getLogService();
         this.eventService = ticketShop.getEventService();
         this.customerService = ticketShop.getCustomerService();

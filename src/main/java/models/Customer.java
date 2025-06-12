@@ -76,5 +76,68 @@ public class Customer {
         return "Kunde: [id: " + id + ", username: " + username + ", email: " + email + ", dateofbirth: " + dateofbirth + "]";
     }
 
+    public static Customer fromString(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Input string is null");
+        }
+        String prefix = "Kunde: [";
+        String suffix = "]";
+        if (!string.startsWith(prefix) || !string.endsWith(suffix)) {
+            throw new IllegalArgumentException("String does not start with \"" + prefix + "\" or end with \"" + suffix + "\"");
+        }
+        // Inneren Teil extrahieren: id: ..., username: ..., email: ..., dateofbirth: ...
+        String content = string.substring(prefix.length(), string.length() - suffix.length());
+        try {
+            // Schlüsselwörter
+            String keyId = "id: ";
+            String keyUsername = ", username: ";
+            String keyEmail = ", email: ";
+            String keyDob = ", dateofbirth: ";
+
+            // id
+            if (!content.startsWith(keyId)) {
+                throw new IllegalArgumentException("Cannot find \"" + keyId + "\" at start");
+            }
+            int idxUsernameKey = content.indexOf(keyUsername);
+            if (idxUsernameKey < 0) {
+                throw new IllegalArgumentException("Cannot find username delimiter");
+            }
+            String idStr = content.substring(keyId.length(), idxUsernameKey).trim();
+
+            // username
+            int idxUsernameStart = idxUsernameKey + keyUsername.length();
+            int idxEmailKey = content.indexOf(keyEmail, idxUsernameStart);
+            if (idxEmailKey < 0) {
+                throw new IllegalArgumentException("Cannot find email delimiter");
+            }
+            String usernameStr = content.substring(idxUsernameStart, idxEmailKey).trim();
+
+            // email
+            int idxEmailStart = idxEmailKey + keyEmail.length();
+            int idxDobKey = content.indexOf(keyDob, idxEmailStart);
+            if (idxDobKey < 0) {
+                throw new IllegalArgumentException("Cannot find dateofbirth delimiter");
+            }
+            String emailStr = content.substring(idxEmailStart, idxDobKey).trim();
+
+            // dateofbirth
+            int idxDobStart = idxDobKey + keyDob.length();
+            String dobStr = content.substring(idxDobStart).trim();
+
+            // Parsen der Werte
+            long id = Long.parseLong(idStr);
+            String username = usernameStr;
+            String email = emailStr;
+            // Erwartet ISO-8601-Format: yyyy-MM-dd
+            java.time.LocalDate dateofbirth = java.time.LocalDate.parse(dobStr);
+
+            // Neues Customer-Objekt erstellen; Tickets und ticketPerEvent bleiben leer, wie im Konstruktor
+            Customer customer = new Customer(id, username, email, dateofbirth);
+            return customer;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Fehler beim Parsen des Customer-Strings: " + e.getMessage(), e);
+        }
+    }
+
 
 }
