@@ -15,7 +15,7 @@ public class SpringEventController {
     private TicketShop ticketShop;
     @Autowired
     public SpringEventController(TicketShop ticketShop) {
-        this.ticketShop = new TicketShop();
+        this.ticketShop = ticketShop;
     }
 
     @GetMapping
