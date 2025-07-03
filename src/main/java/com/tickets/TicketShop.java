@@ -9,6 +9,7 @@ import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
 import logging.LogService;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import services.CustomerService;
 import services.EventService;
 import services.TicketService;
@@ -18,9 +19,9 @@ public class TicketShop {
 
     private LogService logService;
 
-    private CustomerServiceInterface customerService;
-    private EventServiceInterface eventService;
-    private TicketServiceInterface ticketService;
+    private static CustomerServiceInterface customerService;
+    private static EventServiceInterface eventService;
+    private static TicketServiceInterface ticketService;
 
     private TCPClient tcpClient;
 

@@ -1,5 +1,6 @@
+package com.tickets;
+
 import IPC.TCPClient;
-import com.tickets.TicketShop;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;

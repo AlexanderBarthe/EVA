@@ -1,6 +1,5 @@
 import IPC.TCPClient;
-
-import java.io.IOException;
+import com.tickets.PerformanceClient;
 
 public class ClientMain {
 
