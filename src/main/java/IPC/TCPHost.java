@@ -1,6 +1,6 @@
 package IPC;
 
-import controllers.TicketShop;
+import com.tickets.TicketShop;
 
 import java.io.BufferedReader;
 import java.io.IOException;

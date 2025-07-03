@@ -5,6 +5,7 @@ import interfaces.EventServiceInterface;
 import logging.LogService;
 import logging.events.CreateEventEvent;
 import models.Event;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Service
 public class EventService implements EventServiceInterface {
 
     private Map<Long, Event> eventsById = new ConcurrentHashMap<>();

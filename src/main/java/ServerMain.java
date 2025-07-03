@@ -1,15 +1,15 @@
 import IPC.TCPHost;
 import controllers.Client;
-import controllers.TicketShop;
-import org.checkerframework.checker.units.qual.C;
-
-import java.io.IOException;
+import com.tickets.TicketShop;
+import org.springframework.boot.SpringApplication;
 
 public class ServerMain {
 
     public static void main(String[] args){
 
         TicketShop ticketShop = new TicketShop();
+
+        SpringApplication.run(ServerMain.class, args);
 
         TCPHost server = new TCPHost(12345, ticketShop);
         server.start();

@@ -9,6 +9,7 @@ import logging.events.CreateTicketEvent;
 import models.Customer;
 import models.Event;
 import models.Ticket;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Service
 public class TicketService implements TicketServiceInterface {
 
     private Map<Long, Ticket> ticketsById = new ConcurrentHashMap<>();

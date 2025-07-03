@@ -1,6 +1,7 @@
 package controllers;
 
 import com.sun.jdi.InternalException;
+import com.tickets.TicketShop;
 import interfaces.CustomerServiceInterface;
 import models.Customer;
 

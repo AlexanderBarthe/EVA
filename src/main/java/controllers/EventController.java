@@ -1,5 +1,6 @@
 package controllers;
 
+import com.tickets.TicketShop;
 import interfaces.EventServiceInterface;
 import models.Event;
 

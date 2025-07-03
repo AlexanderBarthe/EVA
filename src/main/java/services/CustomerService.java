@@ -5,6 +5,7 @@ import interfaces.CustomerServiceInterface;
 import logging.LogService;
 import logging.events.CreateCustomerEvent;
 import models.Customer;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Service
 public class CustomerService implements CustomerServiceInterface {
 
     private Map<Long, Customer> customersById = new ConcurrentHashMap<>();

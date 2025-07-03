@@ -1,6 +1,6 @@
 package IPC;
 
-import controllers.TicketShop;
+import com.tickets.TicketShop;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;

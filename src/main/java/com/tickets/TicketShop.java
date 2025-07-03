@@ -1,4 +1,4 @@
-package controllers;
+package com.tickets;
 
 import IPC.TCPClient;
 import IPC.remote_services.RemoteCustomerService;
@@ -8,10 +8,12 @@ import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
 import logging.LogService;
+import org.springframework.stereotype.Component;
 import services.CustomerService;
 import services.EventService;
 import services.TicketService;
 
+@Component
 public class TicketShop {
 
     private LogService logService;

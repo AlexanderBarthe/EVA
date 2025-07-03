@@ -1,5 +1,5 @@
 import IPC.TCPClient;
-import controllers.TicketShop;
+import com.tickets.TicketShop;
 import interfaces.CustomerServiceInterface;
 import interfaces.EventServiceInterface;
 import interfaces.TicketServiceInterface;
@@ -137,7 +137,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            10
+                            1000000
                     );
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -208,7 +208,7 @@ public class PerformanceClient {
                             "Event " + idx,
                             "Location " + idx,
                             LocalDateTime.now().plusDays(idx),
-                            10
+                            10000000
                     );
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
